@@ -118,8 +118,8 @@ export default function InteractiveBackground() {
 
       // Add to accumulated velocity (fractional units)
       // Dividing by width/height to get screen-independent fractional force
-      mouse.vx += (dx / width) * 0.12;
-      mouse.vy += (dy / height) * 0.12;
+      mouse.vx += (dx / width) * 0.03;
+      mouse.vy += (dy / height) * 0.03;
 
       mouse.lastX = mouse.x;
       mouse.lastY = mouse.y;
@@ -158,8 +158,8 @@ export default function InteractiveBackground() {
 
         // 1. Move stars: standard float drift + interactive cosmic wind from mouse speed
         // Foreground stars react more heavily to mouse velocity, enhancing depth
-        const windForceX = mouse.vx * star.depth * 0.8;
-        const windForceY = mouse.vy * star.depth * 0.8;
+        const windForceX = mouse.vx * star.depth * 0.35;
+        const windForceY = mouse.vy * star.depth * 0.35;
 
         star.rx += star.vx + windForceX;
         star.ry += star.vy + windForceY;
@@ -171,8 +171,8 @@ export default function InteractiveBackground() {
         if (star.ry > 1) star.ry -= 1;
 
         // 2. Parallax offset: shift stars slightly opposite of cursor position
-        const parallaxOffsetX = -mouseDx * star.depth * 0.035;
-        const parallaxOffsetY = -mouseDy * star.depth * 0.035;
+        const parallaxOffsetX = -mouseDx * star.depth * 0.015;
+        const parallaxOffsetY = -mouseDy * star.depth * 0.015;
 
         // Absolute rendering coordinates
         const starX = star.rx * width + parallaxOffsetX;

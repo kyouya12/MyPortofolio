@@ -4,9 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { useSidebar } from '@/context/SidebarContext';
 import { 
   Menu, 
-  Bell, 
   ChevronDown, 
-  User, 
   LogOut, 
   Settings
 } from 'lucide-react';
@@ -63,14 +61,6 @@ export default function Header({ userEmail }: HeaderProps) {
 
         {/* Action Widgets / Profile Menu */}
         <div className="flex items-center gap-5">
-          {/* Notification Button Mockup */}
-          <button className="relative flex items-center justify-center w-12 h-12 border border-gray-800 rounded-xl bg-gray-950/40 text-gray-400 hover:text-white transition-colors cursor-pointer">
-            <Bell className="w-5.5 h-5.5" />
-            <span className="absolute top-2.5 right-2.5 w-2.5 h-2.5 rounded-full bg-red-500"></span>
-          </button>
-
-          <div className="w-[1px] h-7 bg-gray-800" />
-
           {/* User Profile Dropdown Menu */}
           <div className="relative animate-fade-in" ref={dropdownRef}>
             <button
@@ -110,16 +100,6 @@ export default function Header({ userEmail }: HeaderProps) {
                 </div>
 
                 <ul className="flex flex-col gap-1.5 pt-3.5 pb-2.5 border-b border-gray-800">
-                  <li>
-                    <Link
-                      href="/admin/about"
-                      onClick={() => setDropdownOpen(false)}
-                      className="flex items-center gap-3.5 px-3 py-2.5 font-semibold text-gray-400 rounded-xl text-[15px] hover:bg-gray-800 hover:text-white transition-colors"
-                    >
-                      <User className="w-5 h-5 text-gray-500" />
-                      <span>Edit Profile</span>
-                    </Link>
-                  </li>
                   <li>
                     <Link
                       href="/admin"
