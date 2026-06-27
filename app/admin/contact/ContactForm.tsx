@@ -112,11 +112,17 @@ export default function ContactForm({ initialLinks }: ContactFormProps) {
       return;
     }
 
+    let finalUrl = url.trim();
+    if (iconType === 'mail') {
+      const emailOnly = finalUrl.replace(/^mailto:/i, '').trim();
+      finalUrl = `mailto:${emailOnly}`;
+    }
+
     const formData = new FormData();
     formData.append('platform', platform.trim());
     formData.append('username', username.trim());
     formData.append('icon_type', iconType);
-    formData.append('url', url.trim());
+    formData.append('url', finalUrl);
     formData.append('order_index', orderIndex.toString());
 
     startTransition(async () => {
@@ -141,7 +147,7 @@ export default function ContactForm({ initialLinks }: ContactFormProps) {
         // we can just reload the window or manually patch the state to stay responsive:
         if (editingLink) {
           setLinks(prev => prev.map(l => l.id === editingLink.id 
-            ? { ...l, platform, username, icon_type: iconType, url, order_index: Number(orderIndex) }
+            ? { ...l, platform, username, icon_type: iconType, url: finalUrl, order_index: Number(orderIndex) }
             : l
           ).sort((a,b) => a.order_index - b.order_index));
         } else {

@@ -103,7 +103,7 @@ export default async function ContactPage() {
                 <a
                   key={link.id}
                   href={link.url}
-                  target="_blank"
+                  target={link.url.startsWith('mailto:') ? undefined : "_blank"}
                   rel="noreferrer"
                   className="flex items-center gap-4 bg-[#0d0d0d] border border-white/10 p-5 rounded-2xl group hover:border-brand/40 hover:bg-brand/5 transition-all duration-300 glow-card text-left"
                 >
