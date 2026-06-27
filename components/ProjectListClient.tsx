@@ -70,14 +70,14 @@ export default function ProjectListClient({ projects }: ProjectListClientProps) 
               animate={{
                 x: `calc(-50% + ${diff * 110}%)`,
                 y: "-50%",
-                scale: 1,
-                opacity: isVisible ? 1 : 0,
+                scale: isCenter ? 1 : 0.85,
+                opacity: isVisible ? (isCenter ? 1 : 0.35) : 0,
                 zIndex: isCenter ? 30 : (isVisible ? 20 : 10),
               }}
               transition={{
-                type: "tween",
-                ease: "easeInOut",
-                duration: 0.35
+                type: "spring",
+                stiffness: 300,
+                damping: 30
               }}
               className={`group w-[95%] max-w-[78rem] min-h-[540px] sm:min-h-[500px] md:min-h-[450px] h-auto rounded-3xl border p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-12 items-center bg-black/40 backdrop-blur-[2px] transition-all duration-300 overflow-hidden ${
                 isCenter

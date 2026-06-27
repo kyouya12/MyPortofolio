@@ -15,15 +15,15 @@ export default function ScrollReveal({
   children,
   delay = 0,
   direction = "up",
-  duration = 0.35,
+  duration = 0.8,
   trigger = "view",
 }: ScrollRevealProps) {
   // Translate direction options to X/Y offset values
   const offsets = {
-    up: { y: 15, x: 0 },
-    down: { y: -15, x: 0 },
-    left: { x: 15, y: 0 },
-    right: { x: -15, y: 0 },
+    up: { y: 40, x: 0 },
+    down: { y: -40, x: 0 },
+    left: { x: 40, y: 0 },
+    right: { x: -40, y: 0 },
   };
 
   const animProps =
@@ -58,7 +58,7 @@ export default function ScrollReveal({
       transition={{
         duration: duration,
         delay: delay,
-        ease: [0.16, 1, 0.3, 1], // Snappy easeOutExpo
+        ease: [0.21, 1.02, 0.43, 1.01], // Smooth custom cubic bezier easing
       }}
     >
       {children}
