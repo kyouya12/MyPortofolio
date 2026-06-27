@@ -70,8 +70,8 @@ export default function ProjectListClient({ projects }: ProjectListClientProps) 
               animate={{
                 x: `calc(-50% + ${diff * 110}%)`,
                 y: "-50%",
-                scale: isCenter ? 1 : 0.85,
-                opacity: isVisible ? (isCenter ? 1 : 0.35) : 0,
+                scale: 1,
+                opacity: isVisible ? 1 : 0,
                 zIndex: isCenter ? 30 : (isVisible ? 20 : 10),
               }}
               transition={{
