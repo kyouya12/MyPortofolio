@@ -1,5 +1,5 @@
 import { createClient } from '@/utils/supabase/server';
-import { Code, FolderGit2, User, ChevronRight, Activity, Database, Key, Globe } from 'lucide-react';
+import { Code, FolderGit2, User, ChevronRight, Activity, Database, Key, Globe, Briefcase } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function AdminDashboard() {
@@ -9,14 +9,37 @@ export default async function AdminDashboard() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Fetch actual counts from Supabase dynamically
+  const { count: projectCount } = await supabase
+    .from('projects')
+    .select('*', { count: 'exact', head: true });
+
+  let expCount = 0;
+  try {
+    const { count } = await supabase
+      .from('experiences')
+      .select('*', { count: 'exact', head: true });
+    expCount = count || 0;
+  } catch (e) {
+    // Fallback if experiences table does not exist in schema yet
+  }
+
   const menuItems = [
     {
       title: 'Manage Projects',
       description: 'Tambah, edit, dan hapus proyek portofolio Anda.',
       icon: FolderGit2,
       href: '/admin/projects',
-      count: '0 Projects',
+      count: `${projectCount || 0} Projects`,
       color: 'text-brand border-brand/20 bg-brand/5'
+    },
+    {
+      title: 'Manage Experiences',
+      description: 'Atur riwayat pengalaman magang, detail info dinamis, dan dokumentasi.',
+      icon: Briefcase,
+      href: '/admin/experiences',
+      count: `${expCount} Experiences`,
+      color: 'text-emerald-400 border-emerald-500/20 bg-emerald-500/5'
     },
     {
       title: 'Manage Skills',

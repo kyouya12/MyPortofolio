@@ -22,16 +22,19 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
       smoothWheel: true,
     });
 
+    let rafId: number;
+
     function raf(time: number) {
       lenis.raf(time);
-      requestAnimationFrame(raf);
+      rafId = requestAnimationFrame(raf);
     }
 
-    requestAnimationFrame(raf);
+    rafId = requestAnimationFrame(raf);
 
     // Cleanup function when leaving the page or changing routes
     return () => {
       lenis.destroy();
+      cancelAnimationFrame(rafId);
     };
   }, [pathname]);
 

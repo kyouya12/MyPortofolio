@@ -10,7 +10,8 @@ import {
   Code, 
   User, 
   ArrowLeft,
-  Globe
+  Globe,
+  Briefcase
 } from 'lucide-react';
 
 export default function Sidebar() {
@@ -27,6 +28,11 @@ export default function Sidebar() {
       name: 'Projects',
       href: '/admin/projects',
       icon: FolderGit2,
+    },
+    {
+      name: 'Experiences',
+      href: '/admin/experiences',
+      icon: Briefcase,
     },
     {
       name: 'Skills',
