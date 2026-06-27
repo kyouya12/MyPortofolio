@@ -50,6 +50,10 @@ export async function getExperiences(): Promise<{ success: boolean; data?: Exper
 export async function addExperience(formData: FormData) {
   try {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+    }
 
     const title = formData.get('title') as string;
     const order_index = parseInt(formData.get('order_index') as string || '0', 10);
@@ -130,6 +134,10 @@ export async function addExperience(formData: FormData) {
 export async function updateExperience(id: string, formData: FormData) {
   try {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+    }
 
     const title = formData.get('title') as string;
     const order_index = parseInt(formData.get('order_index') as string || '0', 10);
@@ -213,6 +221,10 @@ export async function updateExperience(id: string, formData: FormData) {
 export async function deleteExperience(id: string) {
   try {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+    }
 
     const { error } = await supabase
       .from('experiences')

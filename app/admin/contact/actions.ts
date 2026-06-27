@@ -37,6 +37,10 @@ export async function getSocialLinks(): Promise<{ success: boolean; data?: Socia
 export async function addSocialLink(formData: FormData) {
   try {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+    }
 
     const platform = formData.get('platform') as string;
     const username = formData.get('username') as string;
@@ -73,6 +77,10 @@ export async function addSocialLink(formData: FormData) {
 export async function updateSocialLink(id: string, formData: FormData) {
   try {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+    }
 
     const platform = formData.get('platform') as string;
     const username = formData.get('username') as string;
@@ -112,6 +120,10 @@ export async function updateSocialLink(id: string, formData: FormData) {
 export async function deleteSocialLink(id: string) {
   try {
     const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+    }
 
     const { error } = await supabase
       .from('social_links')

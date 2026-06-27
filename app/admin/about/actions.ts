@@ -5,6 +5,10 @@ import { createClient } from '@/utils/supabase/server';
 
 export async function updateAboutMe(formData: FormData) {
   const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return { success: false, error: 'Akses ditolak. Anda harus masuk terlebih dahulu.' };
+  }
 
   const bio = formData.get('bio') as string;
   const currentAvatarUrl = formData.get('current_avatar_url') as string;
