@@ -167,7 +167,7 @@ export default function ServicesPage() {
                   </div>
                   <h4 className="text-2xl font-bold text-white">UI/UX Design</h4>
                   <p className="text-text-secondary text-base leading-relaxed">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.
+                    Merancang antarmuka pengguna (UI) yang intuitif, modern, dan estetis, serta mengoptimalkan pengalaman pengguna (UX) melalui riset pengguna, wireframing, dan prototyping interaktif.
                   </p>
                 </div>
               </ScrollReveal>
@@ -180,7 +180,7 @@ export default function ServicesPage() {
                   </div>
                   <h4 className="text-2xl font-bold text-white">Front End Developer</h4>
                   <p className="text-text-secondary text-base leading-relaxed">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.
+                    Mengimplementasikan desain kreatif menjadi kode web yang interaktif, responsif, dan berkinerja tinggi menggunakan teknologi modern seperti React.js, Next.js, dan Tailwind CSS.
                   </p>
                 </div>
               </ScrollReveal>
@@ -193,7 +193,7 @@ export default function ServicesPage() {
                   </div>
                   <h4 className="text-2xl font-bold text-white">Back End Developer</h4>
                   <p className="text-text-secondary text-base leading-relaxed">
-                    Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat.
+                    Membangun arsitektur server yang andal, merancang skema database yang optimal, dan menyediakan API RESTful/GraphQL yang aman untuk kelancaran integrasi data aplikasi.
                   </p>
                 </div>
               </ScrollReveal>

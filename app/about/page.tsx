@@ -29,9 +29,9 @@ export default function AboutPage() {
   }, []);
 
   // Fallbacks if data doesn't exist yet
-  const name = profile?.name || "Azmi";
-  const bio = profile?.bio || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien, vitae pellentesque sem placerat. In id cursus mi, pretium tellus duis convallis.";
-  const avatarUrl = profile?.avatar_url || "/profile.jpg";
+  const name = profile?.name || "";
+  const bio = profile?.bio || "";
+  const avatarUrl = profile?.avatar_url || "";
 
   return (
     <section 
@@ -68,14 +68,18 @@ export default function AboutPage() {
           <div className="md:col-span-5 w-full flex justify-center md:justify-end">
             <ScrollReveal delay={0.2} direction="right">
               <div className="w-[280px] sm:w-[320px] h-[340px] sm:h-[400px] rounded-[2.5rem] border-2 border-white/20 overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.6)] group hover:border-brand transition-all duration-300">
-                <Image
-                  src={avatarUrl}
-                  alt={`${name} Portrait`}
-                  width={320}
-                  height={400}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  priority
-                />
+                {avatarUrl ? (
+                  <Image
+                    src={avatarUrl}
+                    alt={`${name} Portrait`}
+                    width={320}
+                    height={400}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full bg-white/[0.02]" />
+                )}
               </div>
             </ScrollReveal>
           </div>
