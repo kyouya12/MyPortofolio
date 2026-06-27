@@ -86,7 +86,7 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
     setEditingExperience(exp);
     setTitle(exp.title);
     setOrderIndex(exp.order_index);
-    setDetails(exp.details || []);
+    setDetails((exp.details || []).filter(d => !d.key.startsWith('__')));
     setSkills(exp.skills || []);
     setDocs(exp.docs || []);
     setSelectedFiles([]);
@@ -307,13 +307,15 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
                 </div>
 
                 {/* Details list */}
-                {exp.details && exp.details.length > 0 && (
+                {exp.details && exp.details.filter(d => !d.key.startsWith('__')).length > 0 && (
                   <div className="border-t border-gray-800/60 pt-3 space-y-1 text-xs text-gray-400">
-                    {exp.details.map((detail, idx) => (
-                      <p key={idx} className="font-medium">
-                        {detail.key} : <span className="text-gray-200">{detail.value}</span>
-                      </p>
-                    ))}
+                    {exp.details
+                      .filter(d => !d.key.startsWith('__'))
+                      .map((detail, idx) => (
+                        <p key={idx} className="font-medium">
+                          {detail.key} : <span className="text-gray-200">{detail.value}</span>
+                        </p>
+                      ))}
                   </div>
                 )}
 
