@@ -68,16 +68,14 @@ export default function ProjectListClient({ projects }: ProjectListClientProps) 
                 top: "50%",
               }}
               animate={{
-                x: `calc(-50% + ${diff * 110}%)`,
+                x: isCenter ? "-50%" : `calc(-50% + ${diff * 110}%)`,
                 y: "-50%",
-                scale: isCenter ? 1 : 0.85,
-                opacity: isVisible ? (isCenter ? 1 : 0.35) : 0,
-                zIndex: isCenter ? 30 : (isVisible ? 20 : 10),
+                scale: 1,
+                opacity: isCenter ? 1 : 0,
+                zIndex: isCenter ? 30 : 10,
               }}
               transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30
+                duration: 0
               }}
               className={`group w-[95%] max-w-[78rem] min-h-[540px] sm:min-h-[500px] md:min-h-[450px] h-auto rounded-3xl border p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-12 items-center bg-black/40 backdrop-blur-[2px] transition-all duration-300 overflow-hidden ${
                 isCenter
@@ -96,7 +94,7 @@ export default function ProjectListClient({ projects }: ProjectListClientProps) 
                 href={project.repo_url}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full md:w-[480px] h-[200px] md:h-[300px] rounded-2xl border border-white/10 relative overflow-hidden flex-shrink-0 cursor-pointer block group/img shadow-[0_8px_30px_rgba(0,0,0,0.5)] z-10 animate-fade-in"
+                className="w-full md:w-[480px] h-[200px] md:h-[300px] rounded-2xl border border-white/10 relative overflow-hidden flex-shrink-0 cursor-pointer block group/img shadow-[0_8px_30px_rgba(0,0,0,0.5)] z-10"
               >
                 {/* Image or gradient box */}
                 {project.image_url ? (
