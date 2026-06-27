@@ -180,9 +180,9 @@ function DocumentationContent() {
                             zIndex: isCenter ? 30 : (isVisible ? 20 : 10),
                           }}
                           transition={{
-                            type: "spring",
-                            stiffness: 280,
-                            damping: 28
+                            type: "tween",
+                            ease: "easeInOut",
+                            duration: 0.35
                           }}
                           // Enlarged Landscape Card Classes
                           className={`group w-[94%] sm:w-[540px] md:w-[780px] lg:w-[940px] h-56 sm:h-72 md:h-[22rem] lg:h-[25rem] rounded-3xl border flex flex-col justify-between transition-all duration-300 overflow-hidden relative ${
@@ -210,12 +210,7 @@ function DocumentationContent() {
                               {/* Overlay gradient */}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/40 z-10 pointer-events-none" />
 
-                              {/* Browser Controls */}
-                              <div className="flex items-center gap-2 opacity-70 z-20 p-6 sm:p-8">
-                                <span className="w-3 h-3 rounded-full bg-red-500" />
-                                <span className="w-3 h-3 rounded-full bg-yellow-500" />
-                                <span className="w-3 h-3 rounded-full bg-green-500" />
-                              </div>
+
 
                               <div className="text-sm text-brand uppercase tracking-widest font-mono font-bold z-20 p-6 sm:p-8 text-left select-none">
                                 Dokumentasi #{idx + 1}

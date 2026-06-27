@@ -75,9 +75,9 @@ export default function ProjectListClient({ projects }: ProjectListClientProps) 
                 zIndex: isCenter ? 30 : (isVisible ? 20 : 10),
               }}
               transition={{
-                type: "spring",
-                stiffness: 300,
-                damping: 30
+                type: "tween",
+                ease: "easeInOut",
+                duration: 0.35
               }}
               className={`group w-[95%] max-w-[78rem] min-h-[540px] sm:min-h-[500px] md:min-h-[450px] h-auto rounded-3xl border p-6 sm:p-8 md:p-10 flex flex-col md:flex-row gap-6 md:gap-12 items-center bg-black/40 backdrop-blur-[2px] transition-all duration-300 overflow-hidden ${
                 isCenter
