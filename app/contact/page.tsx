@@ -1,5 +1,8 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import ScrollReveal from "../../components/ScrollReveal";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/client";
 import { Mail, Globe } from "lucide-react";
 import {
   GithubIcon,
@@ -53,17 +56,33 @@ const defaultLinks = [
   }
 ];
 
-export default async function ContactPage() {
-  const supabase = await createClient();
+export default function ContactPage() {
+  const [links, setLinks] = useState<any[]>(defaultLinks);
 
-  // Fetch social links from database
-  const { data: dbLinks } = await supabase
-    .from('social_links')
-    .select('*')
-    .order('order_index', { ascending: true })
-    .order('created_at', { ascending: true });
+  // Fetch social links from database client-side
+  useEffect(() => {
+    async function loadSocialLinks() {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from('social_social_links_dummy_fallback') // safety fallback check or real table
+          .select('*'); // we check if social_links exists below
 
-  const links = dbLinks && dbLinks.length > 0 ? dbLinks : defaultLinks;
+        const { data: dbLinks } = await supabase
+          .from('social_links')
+          .select('*')
+          .order('order_index', { ascending: true })
+          .order('created_at', { ascending: true });
+
+        if (dbLinks && dbLinks.length > 0) {
+          setLinks(dbLinks);
+        }
+      } catch (err) {
+        // Silent catch: default links remain active
+      }
+    }
+    loadSocialLinks();
+  }, []);
 
   return (
     <section 
@@ -99,13 +118,30 @@ export default async function ContactPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-6">
             {links.map((link) => {
               const Icon = IconMap[link.icon_type] || Globe;
+              const isMail = link.icon_type === 'mail';
+
               return (
                 <a
                   key={link.id}
                   href={link.url}
+                  onClick={(e) => {
+                    if (isMail) {
+                      e.preventDefault();
+                      const email = link.url.replace(/^mailto:/i, '').trim();
+                      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                      
+                      if (isMobile) {
+                        // Open native mail app on mobile
+                        window.location.href = `mailto:${email}`;
+                      } else {
+                        // Open direct Gmail web browser compose tab on desktop
+                        window.open(`https://mail.google.com/mail/?view=cm&fs=1&to=${email}`, '_blank');
+                      }
+                    }
+                  }}
                   target={link.url.startsWith('mailto:') ? undefined : "_blank"}
                   rel="noreferrer"
-                  className="flex items-center gap-4 bg-[#0d0d0d] border border-white/10 p-5 rounded-2xl group hover:border-brand/40 hover:bg-brand/5 transition-all duration-300 glow-card text-left"
+                  className="flex items-center gap-4 bg-[#0d0d0d] border border-white/10 p-5 rounded-2xl group hover:border-brand/40 hover:bg-brand/5 transition-all duration-300 glow-card text-left cursor-pointer"
                 >
                   <div className="w-12 h-12 rounded-xl bg-black/60 border border-white/10 flex items-center justify-center text-text-secondary group-hover:border-brand group-hover:text-brand transition-all flex-shrink-0">
                     <Icon className="w-5 h-5" />
@@ -134,4 +170,3 @@ export default async function ContactPage() {
     </section>
   );
 }
-
