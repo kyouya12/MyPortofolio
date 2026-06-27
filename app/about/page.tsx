@@ -1,34 +1,18 @@
-"use client";
+import ScrollReveal from '../../components/ScrollReveal';
+import { createClient } from '@/utils/supabase/server';
+import Image from 'next/image';
 
-import { useState, useEffect } from "react";
-import ScrollReveal from "../../components/ScrollReveal";
-import { createClient } from "@/utils/supabase/client";
-import Image from "next/image";
+export default async function AboutPage() {
+  const supabase = await createClient();
 
-export default function AboutPage() {
-  const [profile, setProfile] = useState<any>(null);
+  // Fetch bio details dynamically from profiles table on the server
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', 'default_profile')
+    .single();
 
-  useEffect(() => {
-    async function loadProfile() {
-      try {
-        const supabase = createClient();
-        const { data } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", "default_profile")
-          .single();
-
-        if (data) {
-          setProfile(data);
-        }
-      } catch (err) {
-        // Silent catch: fallback data remains active
-      }
-    }
-    loadProfile();
-  }, []);
-
-  // Fallbacks if data doesn't exist yet
+  // Fallbacks if data doesn't exist yet (clean empty fallback strings)
   const name = profile?.name || "";
   const bio = profile?.bio || "";
   const avatarUrl = profile?.avatar_url || "";

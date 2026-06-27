@@ -1,8 +1,5 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import ScrollReveal from "../../components/ScrollReveal";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/utils/supabase/server";
 import ProjectListClient, { ProjectItem } from "@/components/ProjectListClient";
 
 const defaultProjects: ProjectItem[] = [
@@ -32,28 +29,19 @@ const defaultProjects: ProjectItem[] = [
   }
 ];
 
-export default function ProjectPage() {
-  const [projects, setProjects] = useState<ProjectItem[]>(defaultProjects);
+export default async function ProjectPage() {
+  const supabase = await createClient();
 
-  useEffect(() => {
-    async function loadProjects() {
-      try {
-        const supabase = createClient();
-        const { data } = await supabase
-          .from("projects")
-          .select("*")
-          .order("order_index", { ascending: true })
-          .order("created_at", { ascending: true });
+  // Fetch projects dynamic list from Supabase on the server
+  const { data: dbProjects } = await supabase
+    .from('projects')
+    .select('*')
+    .order('order_index', { ascending: true })
+    .order('created_at', { ascending: true });
 
-        if (data && data.length > 0) {
-          setProjects(data as ProjectItem[]);
-        }
-      } catch (err) {
-        // Silent catch: fallback data remains active
-      }
-    }
-    loadProjects();
-  }, []);
+  const projects = dbProjects && dbProjects.length > 0 
+    ? (dbProjects as ProjectItem[]) 
+    : defaultProjects;
 
   return (
     <section 

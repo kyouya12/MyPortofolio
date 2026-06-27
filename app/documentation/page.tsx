@@ -173,16 +173,14 @@ function DocumentationContent() {
                             top: "50%",
                           }}
                           animate={{
-                            x: `calc(-50% + ${diff * 105}%)`,
+                            x: isCenter ? "-50%" : `calc(-50% + ${diff * 105}%)`,
                             y: "-50%",
                             scale: 1,
-                            opacity: isVisible ? (isCenter ? 1 : 0.35) : 0,
-                            zIndex: isCenter ? 30 : (isVisible ? 20 : 10),
+                            opacity: isCenter ? 1 : 0,
+                            zIndex: isCenter ? 30 : 10,
                           }}
                           transition={{
-                            type: "tween",
-                            ease: "easeInOut",
-                            duration: 0.35
+                            duration: 0
                           }}
                           // Enlarged Landscape Card Classes
                           className={`group w-[94%] sm:w-[540px] md:w-[780px] lg:w-[940px] h-56 sm:h-72 md:h-[22rem] lg:h-[25rem] rounded-3xl border flex flex-col justify-between transition-all duration-300 overflow-hidden relative ${
