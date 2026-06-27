@@ -187,14 +187,6 @@ export default function InteractiveBackground() {
         ctx.arc(starX, starY, star.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(${star.color}, ${currentOpacity})`;
 
-        // Glow halo for larger foreground stars
-        if (star.size > 1.2 && star.depth > 0.7) {
-          ctx.shadowColor = `rgba(${star.color}, 0.6)`;
-          ctx.shadowBlur = 5;
-        } else {
-          ctx.shadowBlur = 0;
-        }
-
         ctx.fill();
       }
 

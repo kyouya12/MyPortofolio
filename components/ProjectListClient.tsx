@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import Image from 'next/image';
 
 export interface ProjectItem {
   id: string;
@@ -99,9 +100,11 @@ export default function ProjectListClient({ projects }: ProjectListClientProps) 
               >
                 {/* Image or gradient box */}
                 {project.image_url ? (
-                  <img
+                  <Image
                     src={project.image_url}
                     alt={project.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 480px"
                     className="w-full h-full object-cover group-hover/img:scale-103 transition-transform duration-500"
                   />
                 ) : (

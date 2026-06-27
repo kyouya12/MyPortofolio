@@ -1,20 +1,37 @@
-import ScrollReveal from '../../components/ScrollReveal';
-import { createClient } from '@/utils/supabase/server';
+"use client";
 
-export default async function AboutPage() {
-  const supabase = await createClient();
+import { useState, useEffect } from "react";
+import ScrollReveal from "../../components/ScrollReveal";
+import { createClient } from "@/utils/supabase/client";
+import Image from "next/image";
 
-  // Fetch bio details dynamically from profiles table
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', 'default_profile')
-    .single();
+export default function AboutPage() {
+  const [profile, setProfile] = useState<any>(null);
+
+  useEffect(() => {
+    async function loadProfile() {
+      try {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from("profiles")
+          .select("*")
+          .eq("id", "default_profile")
+          .single();
+
+        if (data) {
+          setProfile(data);
+        }
+      } catch (err) {
+        // Silent catch: fallback data remains active
+      }
+    }
+    loadProfile();
+  }, []);
 
   // Fallbacks if data doesn't exist yet
-  const name = profile?.name || 'Azmi';
-  const bio = profile?.bio || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien, vitae pellentesque sem placerat. In id cursus mi, pretium tellus duis convallis.';
-  const avatarUrl = profile?.avatar_url || '/profile.jpg';
+  const name = profile?.name || "Azmi";
+  const bio = profile?.bio || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque faucibus ex sapien, vitae pellentesque sem placerat. In id cursus mi, pretium tellus duis convallis.";
+  const avatarUrl = profile?.avatar_url || "/profile.jpg";
 
   return (
     <section 
@@ -51,10 +68,13 @@ export default async function AboutPage() {
           <div className="md:col-span-5 w-full flex justify-center md:justify-end">
             <ScrollReveal delay={0.2} direction="right">
               <div className="w-[280px] sm:w-[320px] h-[340px] sm:h-[400px] rounded-[2.5rem] border-2 border-white/20 overflow-hidden shadow-[0_12px_40px_rgba(0,0,0,0.6)] group hover:border-brand transition-all duration-300">
-                <img
+                <Image
                   src={avatarUrl}
                   alt={`${name} Portrait`}
+                  width={320}
+                  height={400}
                   className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  priority
                 />
               </div>
             </ScrollReveal>

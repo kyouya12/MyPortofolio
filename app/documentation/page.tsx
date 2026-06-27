@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import Image from "next/image";
 import ScrollReveal from "@/components/ScrollReveal";
 import { createClient } from "@/utils/supabase/client";
 
@@ -198,9 +199,11 @@ function DocumentationContent() {
                           {isUrl ? (
                             <>
                               {/* Actual Image fill */}
-                              <img
+                              <Image
                                 src={doc}
                                 alt={`Dokumentasi ${idx + 1}`}
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 780px, 940px"
                                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-103 z-0"
                               />
                               
