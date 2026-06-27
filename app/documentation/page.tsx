@@ -146,7 +146,7 @@ function DocumentationContent() {
 
         {totalDocs > 0 ? (
           <div className="w-full">
-            <ScrollReveal>
+            <ScrollReveal direction="up" delay={0.15}>
               <div className="flex flex-col items-center w-full max-w-[95rem] mx-auto">
                 
                 {/* Slider Container */}

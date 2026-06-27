@@ -58,8 +58,10 @@ export default async function ProjectPage() {
           </div>
         </ScrollReveal>
 
-        {/* Dynamic Project List slideshow */}
-        <ProjectListClient projects={projects} />
+        <ScrollReveal direction="up" delay={0.15}>
+          {/* Dynamic Project List slideshow */}
+          <ProjectListClient projects={projects} />
+        </ScrollReveal>
       </div>
     </section>
   );
