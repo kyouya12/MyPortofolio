@@ -151,8 +151,12 @@ function DocumentationContent() {
                 
                 {/* Slider Container */}
                 <div className="relative flex flex-col items-center justify-center w-full">
-                  {/* Cards Wrapper - Significantly enlarged container */}
-                  <div className="relative w-full max-w-[90rem] h-[18rem] sm:h-[24rem] md:h-[28rem] lg:h-[32rem] overflow-hidden flex items-center justify-center">
+                  {/* Cards Wrapper - Significantly enlarged container with dynamic height */}
+                  <div className={`relative w-full max-w-[90rem] overflow-hidden flex items-center justify-center transition-all duration-500 ${
+                    activeExp?.details?.find((d: any) => d.key === '__docs_orientation')?.value === 'portrait'
+                      ? 'h-[22rem] sm:h-[28rem] md:h-[32rem] lg:h-[36rem]'
+                      : 'h-[18rem] sm:h-[24rem] md:h-[28rem] lg:h-[32rem]'
+                  }`}>
                     {activeDocs.map((doc: any, idx: number) => {
                       let diff = idx - docIndex;
                       if (totalDocs > 1) {
@@ -163,6 +167,7 @@ function DocumentationContent() {
                       const isCenter = diff === 0;
                       const isVisible = Math.abs(diff) <= 1 || (totalDocs === 2 && Math.abs(diff) === 1);
                       const isUrl = typeof doc === "string";
+                      const docsOrientation = activeExp?.details?.find((d: any) => d.key === '__docs_orientation')?.value || 'landscape';
 
                       return (
                         <motion.div
@@ -184,8 +189,12 @@ function DocumentationContent() {
                             stiffness: 280,
                             damping: 28
                           }}
-                          // Enlarged Landscape Card Classes
-                          className={`group w-[94%] sm:w-[540px] md:w-[780px] lg:w-[940px] h-56 sm:h-72 md:h-[22rem] lg:h-[25rem] rounded-3xl border flex flex-col justify-between transition-all duration-300 overflow-hidden relative ${
+                          // Dynamic layout dimensions based on orientation metadata
+                          className={`group rounded-3xl border flex flex-col justify-between transition-all duration-300 overflow-hidden relative ${
+                            docsOrientation === 'portrait'
+                              ? 'w-[75%] sm:w-[280px] md:w-[350px] lg:w-[410px] h-[20rem] sm:h-[25rem] md:h-[29rem] lg:h-[33rem]'
+                              : 'w-[94%] sm:w-[540px] md:w-[780px] lg:w-[940px] h-56 sm:h-72 md:h-[22rem] lg:h-[25rem]'
+                          } ${
                             isCenter
                               ? "border-brand shadow-[0_0_35px_rgba(140,255,0,0.15)] cursor-default"
                               : "border-white/10 cursor-pointer hover:border-white/20"

@@ -61,6 +61,7 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
   const [docs, setDocs] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [showDocs, setShowDocs] = useState(false);
+  const [docsOrientation, setDocsOrientation] = useState<'portrait' | 'landscape'>('landscape');
 
   // Helpers for editing dynamic arrays
   const [newSkill, setNewSkill] = useState('');
@@ -78,6 +79,7 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
     setDocs([]);
     setSelectedFiles([]);
     setShowDocs(false);
+    setDocsOrientation('landscape');
     setIsFormOpen(true);
     setStatus({ type: null, message: '' });
   };
@@ -86,11 +88,17 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
     setEditingExperience(exp);
     setTitle(exp.title);
     setOrderIndex(exp.order_index);
-    setDetails(exp.details || []);
+    // Filter out internal metadata keys from editable details
+    setDetails((exp.details || []).filter(d => !d.key.startsWith('__')));
     setSkills(exp.skills || []);
     setDocs(exp.docs || []);
     setSelectedFiles([]);
     setShowDocs(exp.show_docs || false);
+    
+    // Retrieve docs orientation from details metadata
+    const savedOrientation = exp.details?.find(d => d.key === '__docs_orientation')?.value as 'portrait' | 'landscape';
+    setDocsOrientation(savedOrientation || 'landscape');
+    
     setIsFormOpen(true);
     setStatus({ type: null, message: '' });
   };
@@ -159,8 +167,11 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
       return;
     }
 
-    // Filter out details with empty keys
-    const filteredDetails = details.filter(d => d.key.trim() !== '');
+    // Filter out details with empty keys and internal metadata
+    const filteredDetails = details.filter(d => d.key.trim() !== '' && !d.key.startsWith('__'));
+    
+    // Add internal metadata for docs orientation
+    filteredDetails.push({ key: '__docs_orientation', value: docsOrientation });
 
     const formData = new FormData();
     formData.append('title', title.trim());
@@ -550,17 +561,46 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
                     </label>
 
                     {showDocs && (
-                      <label className="flex items-center gap-1.5 px-3 py-1.5 border border-brand/20 bg-brand/10 hover:bg-brand/25 text-brand rounded-lg text-xs font-bold transition-all cursor-pointer hover:border-brand/40 shadow-sm">
-                        <Upload className="w-3.5 h-3.5" />
-                        <span>Pilih Foto</span>
-                        <input
-                          type="file"
-                          multiple
-                          accept="image/*"
-                          onChange={handleFileSelect}
-                          className="hidden"
-                        />
-                      </label>
+                      <div className="flex flex-wrap items-center gap-3">
+                        {/* Shape Toggle Selector */}
+                        <div className="flex bg-gray-950 border border-gray-800 p-1 rounded-xl text-xs select-none">
+                          <button
+                            type="button"
+                            onClick={() => setDocsOrientation('landscape')}
+                            className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                              docsOrientation === 'landscape'
+                                ? 'bg-white text-black shadow-sm'
+                                : 'text-gray-400 hover:text-white'
+                            }`}
+                          >
+                            Landscape
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setDocsOrientation('portrait')}
+                            className={`px-3 py-1.5 rounded-lg font-bold transition-all cursor-pointer ${
+                              docsOrientation === 'portrait'
+                                ? 'bg-white text-black shadow-sm'
+                                : 'text-gray-400 hover:text-white'
+                            }`}
+                          >
+                            Portrait
+                          </button>
+                        </div>
+
+                        {/* File upload input */}
+                        <label className="flex items-center gap-1.5 px-3 py-2 border border-brand/20 bg-brand/10 hover:bg-brand/25 text-brand rounded-xl text-xs font-bold transition-all cursor-pointer hover:border-brand/40 shadow-sm">
+                          <Upload className="w-3.5 h-3.5" />
+                          <span>Pilih Foto</span>
+                          <input
+                            type="file"
+                            multiple
+                            accept="image/*"
+                            onChange={handleFileSelect}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
                     )}
                   </div>
                 </div>
@@ -572,7 +612,12 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
                       
                       {/* Retained database images */}
                       {docs.map((url, idx) => (
-                        <div key={`existing-${idx}`} className="relative group aspect-video rounded-xl overflow-hidden border border-gray-800 bg-gray-950 flex items-center justify-center">
+                        <div 
+                          key={`existing-${idx}`} 
+                          className={`relative group rounded-xl overflow-hidden border border-gray-800 bg-gray-950 flex items-center justify-center transition-all duration-300 ${
+                            docsOrientation === 'landscape' ? 'aspect-video' : 'aspect-[3/4]'
+                          }`}
+                        >
                           <img
                             src={url}
                             alt={`Dokumentasi ${idx + 1}`}
@@ -593,7 +638,12 @@ export default function ExperienceForm({ initialExperiences }: ExperienceFormPro
                       {selectedFiles.map((file, idx) => {
                         const previewUrl = URL.createObjectURL(file);
                         return (
-                          <div key={`new-${idx}`} className="relative group aspect-video rounded-xl overflow-hidden border border-brand/25 bg-gray-950 flex items-center justify-center">
+                          <div 
+                            key={`new-${idx}`} 
+                            className={`relative group rounded-xl overflow-hidden border border-brand/25 bg-gray-950 flex items-center justify-center transition-all duration-300 ${
+                              docsOrientation === 'landscape' ? 'aspect-video' : 'aspect-[3/4]'
+                            }`}
+                          >
                             <img
                               src={previewUrl}
                               alt={`Preview ${idx + 1}`}

@@ -237,12 +237,14 @@ export default function ServicesPage() {
                       
                       {/* Dynamic Details (Location, Division, etc.) */}
                       <div className="space-y-3">
-                        {activeExp?.details && activeExp.details.length > 0 ? (
-                          activeExp.details.map((detail: any, idx: number) => (
-                            <p key={idx} className="text-base text-text-secondary font-semibold leading-relaxed">
-                              {detail.key} : <span className="text-white font-normal">{detail.value}</span>
-                            </p>
-                          ))
+                        {activeExp?.details && activeExp.details.filter((d: any) => !d.key.startsWith('__')).length > 0 ? (
+                          activeExp.details
+                            .filter((d: any) => !d.key.startsWith('__'))
+                            .map((detail: any, idx: number) => (
+                              <p key={idx} className="text-base text-text-secondary font-semibold leading-relaxed">
+                                {detail.key} : <span className="text-white font-normal">{detail.value}</span>
+                              </p>
+                            ))
                         ) : (
                           <p className="text-sm text-text-secondary italic">Tidak ada detail informasi.</p>
                         )}
