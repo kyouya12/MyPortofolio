@@ -207,17 +207,6 @@ function DocumentationContent() {
                               
                               {/* Overlay gradient */}
                               <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-black/40 z-10 pointer-events-none" />
-
-                              {/* Browser Controls */}
-                              <div className="flex items-center gap-2 opacity-70 z-20 p-6 sm:p-8">
-                                <span className="w-3 h-3 rounded-full bg-red-500" />
-                                <span className="w-3 h-3 rounded-full bg-yellow-500" />
-                                <span className="w-3 h-3 rounded-full bg-green-500" />
-                              </div>
-
-                              <div className="text-sm text-brand uppercase tracking-widest font-mono font-bold z-20 p-6 sm:p-8 text-left select-none">
-                                Dokumentasi #{idx + 1}
-                              </div>
                             </>
                           ) : (
                             <>

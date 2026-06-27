@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import ScrollReveal from "../../components/ScrollReveal";
 import { ArrowRight, Layout, Code, Server } from "lucide-react";
@@ -156,136 +156,146 @@ export default function ServicesPage() {
             </div>
           </ScrollReveal>
 
-           {subTab === "service" ? (
-            /* SERVICES GRID */
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* UI/UX Design */}
-              <ScrollReveal delay={0.1}>
-                <div className="bg-black border border-white/10 p-6 rounded-2xl glow-card flex flex-col items-center text-center space-y-4 h-full">
-                  <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
-                    <Layout className="w-8 h-8" />
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={subTab}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25, ease: "easeInOut" }}
+              className="w-full"
+            >
+              {subTab === "service" ? (
+                /* SERVICES GRID */
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* UI/UX Design */}
+                  <ScrollReveal delay={0.1}>
+                    <div className="bg-black border border-white/10 p-6 rounded-2xl glow-card flex flex-col items-center text-center space-y-4 h-full">
+                      <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                        <Layout className="w-8 h-8" />
+                      </div>
+                      <h4 className="text-2xl font-bold text-white">UI/UX Design</h4>
+                      <p className="text-text-secondary text-base leading-relaxed">
+                        Merancang antarmuka pengguna (UI) yang intuitif, modern, dan estetis, serta mengoptimalkan pengalaman pengguna (UX) melalui riset pengguna, wireframing, dan prototyping interaktif.
+                      </p>
+                    </div>
+                  </ScrollReveal>
+     
+                  {/* Front End Developer */}
+                  <ScrollReveal delay={0.2}>
+                    <div className="bg-black border border-white/10 p-6 rounded-2xl glow-card flex flex-col items-center text-center space-y-4 h-full">
+                      <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                        <Code className="w-8 h-8" />
+                      </div>
+                      <h4 className="text-2xl font-bold text-white">Front End Developer</h4>
+                      <p className="text-text-secondary text-base leading-relaxed">
+                        Mengimplementasikan desain kreatif menjadi kode web yang interaktif, responsif, dan berkinerja tinggi menggunakan teknologi modern seperti React.js, Next.js, dan Tailwind CSS.
+                      </p>
+                    </div>
+                  </ScrollReveal>
+     
+                  {/* Back End Developer */}
+                  <ScrollReveal delay={0.3}>
+                    <div className="bg-black border border-white/10 p-6 rounded-2xl glow-card flex flex-col items-center text-center space-y-4 h-full">
+                      <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
+                        <Server className="w-8 h-8" />
+                      </div>
+                      <h4 className="text-2xl font-bold text-white">Back End Developer</h4>
+                      <p className="text-text-secondary text-base leading-relaxed">
+                        Membangun arsitektur server yang andal, merancang skema database yang optimal, dan menyediakan API RESTful/GraphQL yang aman untuk kelancaran integrasi data aplikasi.
+                      </p>
+                    </div>
+                  </ScrollReveal>
+                </div>
+              ) : experiences.length === 0 ? (
+                /* EMPTY STATE */
+                <ScrollReveal delay={0.1}>
+                  <div className="flex border border-white/10 p-12 rounded-3xl bg-black/40 backdrop-blur-md justify-center items-center glow-card min-h-[440px]">
+                    <p className="text-text-secondary text-lg font-semibold">Belum ada data pengalaman magang.</p>
                   </div>
-                  <h4 className="text-2xl font-bold text-white">UI/UX Design</h4>
-                  <p className="text-text-secondary text-base leading-relaxed">
-                    Merancang antarmuka pengguna (UI) yang intuitif, modern, dan estetis, serta mengoptimalkan pengalaman pengguna (UX) melalui riset pengguna, wireframing, dan prototyping interaktif.
-                  </p>
-                </div>
-              </ScrollReveal>
- 
-              {/* Front End Developer */}
-              <ScrollReveal delay={0.2}>
-                <div className="bg-black border border-white/10 p-6 rounded-2xl glow-card flex flex-col items-center text-center space-y-4 h-full">
-                  <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
-                    <Code className="w-8 h-8" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-white">Front End Developer</h4>
-                  <p className="text-text-secondary text-base leading-relaxed">
-                    Mengimplementasikan desain kreatif menjadi kode web yang interaktif, responsif, dan berkinerja tinggi menggunakan teknologi modern seperti React.js, Next.js, dan Tailwind CSS.
-                  </p>
-                </div>
-              </ScrollReveal>
- 
-              {/* Back End Developer */}
-              <ScrollReveal delay={0.3}>
-                <div className="bg-black border border-white/10 p-6 rounded-2xl glow-card flex flex-col items-center text-center space-y-4 h-full">
-                  <div className="w-16 h-16 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand">
-                    <Server className="w-8 h-8" />
-                  </div>
-                  <h4 className="text-2xl font-bold text-white">Back End Developer</h4>
-                  <p className="text-text-secondary text-base leading-relaxed">
-                    Membangun arsitektur server yang andal, merancang skema database yang optimal, dan menyediakan API RESTful/GraphQL yang aman untuk kelancaran integrasi data aplikasi.
-                  </p>
-                </div>
-              </ScrollReveal>
-            </div>
-          ) : experiences.length === 0 ? (
-            /* EMPTY STATE */
-            <ScrollReveal delay={0.1}>
-              <div className="flex border border-white/10 p-12 rounded-3xl bg-black/40 backdrop-blur-md justify-center items-center glow-card min-h-[440px]">
-                <p className="text-text-secondary text-lg font-semibold">Belum ada data pengalaman magang.</p>
-              </div>
-            </ScrollReveal>
-          ) : (
-            /* EXPERIENCE PANELS */
-            <ScrollReveal delay={0.1}>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-black border border-white/10 p-6 rounded-3xl glow-card min-h-[440px]">
-                {/* Left Column: Navigation Buttons */}
-                <div className="md:col-span-4 flex flex-col gap-3">
-                  {experiences.map((exp) => (
-                    <button
-                      key={exp.id}
-                      onClick={() => {
-                        setSelectedExpId(exp.id);
-                      }}
-                      className={`w-full py-4 px-6 text-left rounded-xl border text-base md:text-lg font-bold transition-all cursor-pointer ${
-                        selectedExpId === exp.id
-                          ? "bg-white text-black border-white shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
-                          : "bg-transparent border-white/10 text-white hover:border-brand/40 hover:text-brand"
-                      }`}
-                    >
-                      {exp.title}
-                    </button>
-                  ))}
-                </div>
- 
-                {/* Right Column: Experience Details */}
-                <div className="md:col-span-8 border border-white/10 p-6 rounded-2xl bg-[#050505] flex flex-col justify-between relative min-h-[380px]">
-                  
-                  {/* Content Scroll Wrapper */}
-                  <div className="flex-grow overflow-y-auto max-h-[320px] pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-brand/35 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                </ScrollReveal>
+              ) : (
+                /* EXPERIENCE PANELS */
+                <ScrollReveal delay={0.1}>
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-6 bg-black border border-white/10 p-6 rounded-3xl glow-card min-h-[440px]">
+                    {/* Left Column: Navigation Buttons */}
+                    <div className="md:col-span-4 flex flex-col gap-3">
+                      {experiences.map((exp) => (
+                        <button
+                          key={exp.id}
+                          onClick={() => {
+                            setSelectedExpId(exp.id);
+                          }}
+                          className={`w-full py-4 px-6 text-left rounded-xl border text-base md:text-lg font-bold transition-all cursor-pointer ${
+                            selectedExpId === exp.id
+                              ? "bg-white text-black border-white shadow-[0_4px_20px_rgba(255,255,255,0.1)]"
+                              : "bg-transparent border-white/10 text-white hover:border-brand/40 hover:text-brand"
+                          }`}
+                        >
+                          {exp.title}
+                        </button>
+                      ))}
+                    </div>
+     
+                    {/* Right Column: Experience Details */}
+                    <div className="md:col-span-8 border border-white/10 p-6 rounded-2xl bg-[#050505] flex flex-col justify-between relative min-h-[380px]">
                       
-                      {/* Dynamic Details (Location, Division, etc.) */}
-                      <div className="space-y-3">
-                        {activeExp?.details && activeExp.details.length > 0 ? (
-                          activeExp.details.map((detail: any, idx: number) => (
-                            <p key={idx} className="text-base text-text-secondary font-semibold leading-relaxed">
-                              {detail.key} : <span className="text-white font-normal">{detail.value}</span>
-                            </p>
-                          ))
-                        ) : (
-                          <p className="text-sm text-text-secondary italic">Tidak ada detail informasi.</p>
-                        )}
+                      {/* Content Scroll Wrapper */}
+                      <div className="flex-grow overflow-y-auto max-h-[320px] pr-2 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:bg-white/10 [&::-webkit-scrollbar-thumb]:rounded-full hover:[&::-webkit-scrollbar-thumb]:bg-brand/35 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
+                          
+                          {/* Dynamic Details (Location, Division, etc.) */}
+                          <div className="space-y-3">
+                            {activeExp?.details && activeExp.details.length > 0 ? (
+                              activeExp.details.map((detail: any, idx: number) => (
+                                <p key={idx} className="text-base text-text-secondary font-semibold leading-relaxed">
+                                  {detail.key} : <span className="text-white font-normal">{detail.value}</span>
+                                </p>
+                              ))
+                            ) : (
+                              <p className="text-sm text-text-secondary italic">Tidak ada detail informasi.</p>
+                            )}
+                          </div>
+     
+                          {/* Skills List */}
+                          <div className="space-y-3">
+                            <p className="text-base text-text-secondary font-bold uppercase tracking-wider">Skill yang dipelajari :</p>
+                            {activeExp?.skills && activeExp.skills.length > 0 ? (
+                              <ul className="space-y-1.5 pl-1">
+                                {activeExp.skills.map((skill: string) => (
+                                  <li key={skill} className="text-base text-white flex items-start gap-2.5 leading-relaxed">
+                                    <span className="text-brand mt-1 flex-shrink-0 text-xs">~</span>
+                                    <span>{skill}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            ) : (
+                              <p className="text-sm text-text-secondary italic">Tidak ada daftar skill.</p>
+                            )}
+                          </div>
+     
+                        </div>
                       </div>
-
-                      {/* Skills List */}
-                      <div className="space-y-3">
-                        <p className="text-base text-text-secondary font-bold uppercase tracking-wider">Skill yang dipelajari :</p>
-                        {activeExp?.skills && activeExp.skills.length > 0 ? (
-                          <ul className="space-y-1.5 pl-1">
-                            {activeExp.skills.map((skill: string) => (
-                              <li key={skill} className="text-base text-white flex items-start gap-2.5 leading-relaxed">
-                                <span className="text-brand mt-1 flex-shrink-0 text-xs">~</span>
-                                <span>{skill}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : (
-                          <p className="text-sm text-text-secondary italic">Tidak ada daftar skill.</p>
-                        )}
-                      </div>
-
+     
+                      {/* Bottom Action Row */}
+                      {activeExp?.show_docs && totalDocs > 0 && (
+                        <div className="flex justify-end pt-4 border-t border-white/5 mt-4 select-none">
+                          <Link
+                            href={`/documentation?id=${activeExp.id}`}
+                            className="text-base md:text-lg font-bold text-white hover:text-brand underline decoration-brand underline-offset-4 cursor-pointer transition-colors"
+                          >
+                            Dokumentasi
+                          </Link>
+                        </div>
+                      )}
                     </div>
                   </div>
-
-                  {/* Bottom Action Row */}
-                  {activeExp?.show_docs && totalDocs > 0 && (
-                    <div className="flex justify-end pt-4 border-t border-white/5 mt-4 select-none">
-                      <Link
-                        href={`/documentation?id=${activeExp.id}`}
-                        className="text-base md:text-lg font-bold text-white hover:text-brand underline decoration-brand underline-offset-4 cursor-pointer transition-colors"
-                      >
-                        Dokumentasi
-                      </Link>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </ScrollReveal>
-          )}
+                </ScrollReveal>
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>
   );
 }
-
